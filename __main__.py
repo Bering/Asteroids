@@ -11,7 +11,7 @@ class Application:
 		self.rect = self.surface.get_rect()
 		self.game_objects = []
 
-		self.player = Player()
+		self.player = Player(self)
 		self.game_objects.append(self.player)
 
 	def run(self):

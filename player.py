@@ -1,12 +1,14 @@
 import pygame
 from game_object import GameObject
+from bullet import Bullet
 
 class Player(GameObject):
-	def __init__(self):
+	def __init__(self, app):
 		super().__init__("player.png", 300, 300, 0, 0)
 		self.unrotated_surface = self.surface
 		self.rotation_speed = 0
 		self.angle = 0
+		self.app = app
 
 	def events(self, event):
 		if event.type == pygame.KEYDOWN:
@@ -34,7 +36,7 @@ class Player(GameObject):
 		self.rotation_speed = 0
 
 	def fire(self):
-		pass
+		self.app.game_objects.append(Bullet(self))
 
 	def fire_hold(self):
 		pass
