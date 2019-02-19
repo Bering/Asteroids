@@ -19,6 +19,9 @@ class Application:
 			for event in pygame.event.get():
 				if (event.type == pygame.QUIT):
 					self.screens.change_to("Quit")
+				else
+					for go in self.game_objects:
+						go.events(event)
 
 			for go in self.game_objects:
 				go.update(self.clock.get_time())

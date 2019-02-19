@@ -9,8 +9,11 @@ class GameObject:
 		self.vx = vx
 		self.vy = vy
 
-	def update(delta_time):
+	def events(self, event):
+		pass
+
+	def update(self, delta_time):
 		self.rect.move(self.vx, self.vy)
 
-	def render(surface, rect):
+	def render(self, surface, rect):
 		surface.blit(self.surface, self.rect)
