@@ -23,8 +23,6 @@ class Player(GameObject):
 				self.rotate_none()
 			elif event.key == pygame.K_RIGHT or event.key == pygame.K_KP6:
 				self.rotate_none()
-			elif event.key == pygame.K_SPACE:
-				self.fire_hold()
 
 	def rotate_left(self):
 		self.rotation_speed = 5
@@ -37,9 +35,6 @@ class Player(GameObject):
 
 	def fire(self):
 		self.app.game_objects.append(Bullet(self))
-
-	def fire_hold(self):
-		pass
 
 	def update(self, delta_time):
 		self.angle = self.clamp_angle(self.angle + self.rotation_speed)
