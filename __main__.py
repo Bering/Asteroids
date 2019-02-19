@@ -53,7 +53,6 @@ class Application:
 		or game_object.rect.center[1] < miny \
 		or game_object.rect.center[1] > maxy:
 			self.game_objects.remove(game_object)
-			print("Removed")
 
 print("Asteroid alpha0")
 app = Application()
