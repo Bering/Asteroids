@@ -1,4 +1,6 @@
 import pygame
+from game_object import GameObject
+from player import Player
 
 class Application:
 
@@ -9,6 +11,9 @@ class Application:
 		self.rect = self.surface.get_rect()
 		self.game_objects = []
 
+		self.player = Player()
+		self.game_objects.append(self.player)
+
 	def run(self):
 		self.quit = False
 		self.clock = pygame.time.Clock()
@@ -17,9 +22,11 @@ class Application:
 			self.clock.tick(60)
 
 			for event in pygame.event.get():
-				if (event.type == pygame.QUIT):
-					self.screens.change_to("Quit")
-				else
+				if event.type == pygame.QUIT:
+					self.quit = True
+				elif event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+					self.quit = True
+				else:
 					for go in self.game_objects:
 						go.events(event)
 
