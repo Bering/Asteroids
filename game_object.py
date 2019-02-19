@@ -14,7 +14,7 @@ class GameObject:
 		pass
 
 	def update(self, delta_time):
-		self.rect.move(self.vx, self.vy)
+		self.rect.move_ip(self.vx, self.vy)
 
 	def render(self, surface, rect):
 		surface.blit(self.surface, self.rect)
