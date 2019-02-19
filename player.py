@@ -4,6 +4,9 @@ from game_object import GameObject
 class Player(GameObject):
 	def __init__(self):
 		super().__init__("player.png", 300, 300, 0, 0)
+		self.unrotated_surface = self.surface
+		self.rotation_speed = 10
+		self.angle = 0
 
 	def events(self, event):
 		if event.type == pygame.KEYDOWN:
@@ -15,10 +18,24 @@ class Player(GameObject):
 				self.fire()
 
 	def rotate_left(self):
-		pass
+		self.angle = self.clamp_angle(self.angle + self.rotation_speed)
 
 	def rotate_right(self):
-		pass
+		self.angle = self.clamp_angle(self.angle - self.rotation_speed)
+
+	def clamp_angle(self, angle):
+		while angle >= 360:
+			angle -= 360
+		while angle < 0:
+			angle += 360
+		return angle
 
 	def fire(self):
 		pass
+
+	def update(self, delta_time):
+		self.surface = pygame.transform.rotate(self.unrotated_surface, self.angle)
+		new_rect = self.surface.get_rect()
+		new_rect.center = self.rect.center
+		self.rect = new_rect
+		super().update(delta_time)
