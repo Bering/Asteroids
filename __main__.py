@@ -32,6 +32,7 @@ class Application:
 
 			for go in self.game_objects:
 				go.update(self.clock.get_time())
+				self.remove_if_out_of_frame(go)
 
 			self.surface.fill((0, 0, 0))
 			for go in self.game_objects:
@@ -40,6 +41,19 @@ class Application:
 
 	def on_quit(self):
 		self.quit = True
+
+	def remove_if_out_of_frame(self, game_object):
+		minx = 0 - game_object.rect.width
+		maxx = self.rect.width + game_object.rect.width
+		miny = 0 - game_object.rect.height
+		maxy = self.rect.height + game_object.rect.height
+		
+		if game_object.rect.center[0] < minx \
+		or game_object.rect.center[0] > maxx \
+		or game_object.rect.center[1] < miny \
+		or game_object.rect.center[1] > maxy:
+			self.game_objects.remove(game_object)
+			print("Removed")
 
 print("Asteroid alpha0")
 app = Application()
