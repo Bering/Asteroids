@@ -3,11 +3,13 @@ import random
 from game_object import GameObject
 
 class Asteroid(GameObject):
-	def __init__(self, is_big):
-		if is_big:
+	def __init__(self, size):
+		if size == 3:
 			image = "asteroid_big.png"
-		else:
+		elif size == 2:
 			image = "asteroid_small.png"
+		else
+			image = "asteroid_tiny.png"
 
 		vx = vy = 0
 		while vx == vy == 0:

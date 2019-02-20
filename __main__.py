@@ -18,7 +18,7 @@ class Application:
 	def run(self):
 		self.quit = False
 		self.clock = pygame.time.Clock()
-		pygame.time.set_timer(pygame.USEREVENT, 1000)
+		pygame.time.set_timer(pygame.USEREVENT, 2000)
 
 		while(not self.quit):
 			self.clock.tick(60)
@@ -29,7 +29,7 @@ class Application:
 				elif event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
 					self.quit = True
 				elif event.type == pygame.USEREVENT:
-					self.game_objects.append(Asteroid(True))
+					self.game_objects.append(Asteroid(3))
 				else:
 					for go in self.game_objects:
 						go.events(event)
