@@ -62,6 +62,9 @@ class Application:
 					self.collision(go, ogo)
 
 			self.game_objects = [go for go in self.game_objects if not go.is_dead]
+			
+			if self.player.is_dead:
+				self.game_over()
 
 			self.surface.fill((0, 0, 0))
 			for go in self.game_objects:
@@ -91,10 +94,7 @@ class Application:
 			return
 
 		if isinstance(ogo, Player):
-			# TODO: Proper death screen
-			self.death_sound.play()
-			print("You are dead!")
-			self.quit = True
+			self.game_over()
 			return
 
 		go.is_dead = True
@@ -113,6 +113,13 @@ class Application:
 			a.x = go.rect.center[0]
 			a.y = go.rect.center[1]
 			self.game_objects.append(a)
+
+	def game_over(self):
+		# TODO: Proper death screen
+		self.death_sound.play()
+		print("You are dead!")
+		self.quit = True
+		return
 
 print("Asteroid alpha0")
 app = Application()

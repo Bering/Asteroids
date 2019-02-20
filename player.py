@@ -1,3 +1,4 @@
+import math
 import pygame
 from game_object import GameObject
 from bullet import Bullet
@@ -17,6 +18,10 @@ class Player(GameObject):
 				self.rotate_left()
 			elif event.key == pygame.K_RIGHT or event.key == pygame.K_KP6:
 				self.rotate_right()
+			elif event.key == pygame.K_UP or event.key == pygame.K_KP8:
+				self.forward()
+			elif event.key == pygame.K_DOWN or event.key == pygame.K_KP2:
+				self.backwards()
 			elif event.key == pygame.K_SPACE:
 				self.fire()
 		elif event.type == pygame.KEYUP:
@@ -33,6 +38,14 @@ class Player(GameObject):
 
 	def rotate_none(self):
 		self.rotation_speed = 0
+
+	def forward(self):
+		self.vx -= math.sin(math.radians(self.angle))
+		self.vy -= math.cos(math.radians(self.angle))
+
+	def backwards(self):
+		self.vx += math.sin(math.radians(self.angle))
+		self.vy += math.cos(math.radians(self.angle))
 
 	def fire(self):
 		self.app.game_objects.append(Bullet(self))
