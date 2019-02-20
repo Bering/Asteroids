@@ -50,3 +50,11 @@ class Player(GameObject):
 		while angle < 0:
 			angle += 360
 		return angle
+
+	def collision(self, other_game_object):
+		if isinstance(other_game_object, Bullet):
+			return
+
+		# TODO: Proper death screen
+		print("You are dead!")
+		self.app.quit = True

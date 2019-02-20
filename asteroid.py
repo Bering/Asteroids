@@ -46,3 +46,7 @@ class Asteroid(GameObject):
 		while angle < 0:
 			angle += 360
 		return angle
+
+	def collision(self, other_game_object):
+		if isinstance(other_game_object, Asteroid):
+			return

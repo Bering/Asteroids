@@ -38,6 +38,15 @@ class Application:
 				go.update(self.clock.get_time())
 				self.remove_if_out_of_frame(go)
 
+			for go in self.game_objects:
+				for ogo in self.game_objects:
+					if ogo == go: continue
+					if not go.rect.colliderect(ogo.rect): continue
+					# TODO: circle collider
+					go.collision(ogo)
+
+			self.game_objects = [go for go in self.game_objects if not go.is_dead]
+
 			self.surface.fill((0, 0, 0))
 			for go in self.game_objects:
 				go.render(self.surface, self.rect)
@@ -56,7 +65,7 @@ class Application:
 		or game_object.rect.center[0] > maxx \
 		or game_object.rect.center[1] < miny \
 		or game_object.rect.center[1] > maxy:
-			self.game_objects.remove(game_object)
+			game_object.is_dead = True
 
 print("Asteroid alpha0")
 app = Application()

@@ -11,6 +11,7 @@ class GameObject:
 		self.y = y
 		self.vx = vx
 		self.vy = vy
+		self.is_dead = False
 
 	def events(self, event):
 		pass
@@ -22,3 +23,6 @@ class GameObject:
 
 	def render(self, surface, rect):
 		surface.blit(self.surface, self.rect)
+
+	def collision(self, other_game_object):
+		pass
