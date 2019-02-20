@@ -13,12 +13,13 @@ class Application:
 		pygame.display.set_caption("Asteroid Alpha 0.1")
 		self.surface = pygame.display.set_mode((600, 600))
 		self.rect = self.surface.get_rect()
-		self.font = pygame.font.Font("Fonts/OpenSansRegular.ttf", 16)
+		self.font = pygame.font.Font("Fonts/OpenSansRegular.ttf", 20)
 		self.game_objects = []
 
 		self.player = Player(self)
 		self.game_objects.append(self.player)
 		self.is_game_over = False
+		self.score = 0
 
 		# TODO: Your program should test that pygame.mixerpygame module for loading and playing sounds is available and intialized before using it.
 		pygame.mixer.music.load("Sounds/zYnthetic - Abandon v3.ogg")
@@ -42,45 +43,66 @@ class Application:
 			self.clock.tick(60)
 
 			for event in pygame.event.get():
-				if event.type == pygame.QUIT:
-					self.quit = True
-				elif event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
-					self.quit = True
-				elif event.type == pygame.USEREVENT:
-					self.game_objects.append(Asteroid(3))
-				else:
-					for go in self.game_objects:
-						go.events(event)
+				self.handle_event(event)
 
+			self.update(self.clock.get_time())
+
+			self.render(self.surface, self.rect)
+
+	def handle_event(self, event):
+		if event.type == pygame.QUIT:
+			self.quit = True
+		elif event.type == pygame.KEYUP and event.key == pygame.K_ESCAPE:
+			self.quit = True
+		elif event.type == pygame.USEREVENT:
+			self.game_objects.append(Asteroid(3))
+		else:
 			for go in self.game_objects:
-				go.update(self.clock.get_time())
-				self.remove_if_out_of_frame(go)
+				go.events(event)
 
-			for go in self.game_objects:
-				for ogo in self.game_objects:
-					if ogo == go: continue
-					if not go.rect.colliderect(ogo.rect): continue
-					# TODO: circle collider
-					self.collision(go, ogo)
+	def update(self, delta_time):
+		for go in self.game_objects:
+			go.update(self.clock.get_time())
+			self.remove_if_out_of_frame(go)
 
-			self.game_objects = [go for go in self.game_objects if not go.is_dead]
-			
-			if self.player.is_dead:
-				self.game_over()
+		for go in self.game_objects:
+			for ogo in self.game_objects:
+				if ogo == go: continue
+				if not go.rect.colliderect(ogo.rect): continue
+				# TODO: circle collider
+				self.collision(go, ogo)
 
+		self.game_objects = [go for go in self.game_objects if not go.is_dead]
+		
+		if self.player.is_dead:
+			self.game_over()
 
-			self.surface.fill((0, 0, 0))
+	def render(self, surface, rect):
+		surface.fill((0, 0, 0))
 
-			for go in self.game_objects:
-				go.render(self.surface, self.rect)
+		score_surface = self.font.render(
+			"Score: " + str(self.score),
+			True,
+			(255, 255, 255)
+		)
+		score_rect = score_surface.get_rect()
+		score_rect.topright = rect.topright
+		surface.blit(score_surface, score_rect)
 
-			if self.is_game_over:
-				text_surface = self.font.render("You are dead!", True, (255,255,255))
-				text_rect = text_surface.get_rect()
-				text_rect.center = self.rect.center
-				self.surface.blit(text_surface, text_rect)
+		for go in self.game_objects:
+			go.render(surface, rect)
 
-			pygame.display.flip()
+		if self.is_game_over:
+			text_surface = self.font.render(
+				"You are dead!",
+				True,
+				(255, 255, 255)
+			)
+			text_rect = text_surface.get_rect()
+			text_rect.center = rect.center
+			surface.blit(text_surface, text_rect)
+
+		pygame.display.flip()
 
 	def on_quit(self):
 		self.quit = True
@@ -111,6 +133,7 @@ class Application:
 
 		go.is_dead = True
 		ogo.is_dead = True
+		self.score += 4 - go.size
 
 		sound_index = random.randrange(len(self.impact_sounds))
 		self.impact_sounds[sound_index].play()
