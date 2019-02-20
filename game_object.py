@@ -7,6 +7,8 @@ class GameObject:
 		image_file = os.path.join("images", image)
 		self.surface = pygame.image.load(image_file).convert_alpha()
 		self.rect = self.surface.get_rect().move(x, y)
+		self.x = x
+		self.y = y
 		self.vx = vx
 		self.vy = vy
 
@@ -14,7 +16,9 @@ class GameObject:
 		pass
 
 	def update(self, delta_time):
-		self.rect.move_ip(self.vx, self.vy)
+		self.x += self.vx
+		self.y += self.vy
+		self.rect.center = (self.x, self.y)
 
 	def render(self, surface, rect):
 		surface.blit(self.surface, self.rect)

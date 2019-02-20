@@ -15,17 +15,17 @@ class Asteroid(GameObject):
 		while vx == vy == 0:
 			if random.randint(0, 1) == 0:
 				x = 0
-				vx = random.randint(0, 1)
+				vx = random.uniform(0.1, 1.0)
 			else:
 				x = 600
-				vx = random.randint(-1, 0)
+				vx = random.uniform(-1.0, -0.1)
 
 			if random.randint(0, 1) == 0:
 				y = 0
-				vy = random.randint(0, 1)
+				vy = random.uniform(0.1, 1.0)
 			else:
 				y = 600
-				vy = random.randint(-1, 0)
+				vy = random.uniform(-1.0, -0.1)
 
 		super().__init__(image, x, y, vx, vy)
 		self.unrotated_surface = self.surface
