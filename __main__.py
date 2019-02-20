@@ -1,4 +1,5 @@
 import pygame
+import random
 from game_object import GameObject
 from player import Player
 from bullet import Bullet
@@ -7,6 +8,7 @@ from asteroid import Asteroid
 class Application:
 
 	def __init__(self):
+		pygame.mixer.pre_init(44100, -16, 1, 512)
 		pygame.init()
 		pygame.display.set_caption("Asteroid Alpha 0.1")
 		self.surface = pygame.display.set_mode((600, 600))
@@ -15,6 +17,19 @@ class Application:
 
 		self.player = Player(self)
 		self.game_objects.append(self.player)
+
+		# TODO: Your program should test that pygame.mixerpygame module for loading and playing sounds is available and intialized before using it.
+		pygame.mixer.music.load("Sounds/zYnthetic - Abandon v3.ogg")
+		pygame.mixer.music.set_volume(0.01)
+		pygame.mixer.music.play(-1, 31)
+
+		self.impact_sounds = [
+			pygame.mixer.Sound("Sounds/hit1.ogg"),
+			pygame.mixer.Sound("Sounds/hit2.ogg"),
+			pygame.mixer.Sound("Sounds/hit3.ogg")
+		]
+
+		self.death_sound = pygame.mixer.Sound("Sounds/death.ogg")
 
 	def run(self):
 		self.quit = False
@@ -77,12 +92,16 @@ class Application:
 
 		if isinstance(ogo, Player):
 			# TODO: Proper death screen
+			self.death_sound.play()
 			print("You are dead!")
 			self.quit = True
 			return
 
 		go.is_dead = True
 		ogo.is_dead = True
+
+		sound_index = random.randrange(len(self.impact_sounds))
+		self.impact_sounds[sound_index].play()
 		
 		if go.size > 1:
 			a = Asteroid(go.size - 1)

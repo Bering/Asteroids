@@ -9,6 +9,7 @@ class Player(GameObject):
 		self.rotation_speed = 0
 		self.angle = 0
 		self.app = app
+		self.fire_sound = pygame.mixer.Sound("Sounds/fire.ogg")
 
 	def events(self, event):
 		if event.type == pygame.KEYDOWN:
@@ -35,6 +36,7 @@ class Player(GameObject):
 
 	def fire(self):
 		self.app.game_objects.append(Bullet(self))
+		self.fire_sound.play()
 
 	def update(self, delta_time):
 		self.angle = self.clamp_angle(self.angle + self.rotation_speed)
