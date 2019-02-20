@@ -13,10 +13,12 @@ class Application:
 		pygame.display.set_caption("Asteroid Alpha 0.1")
 		self.surface = pygame.display.set_mode((600, 600))
 		self.rect = self.surface.get_rect()
+		self.font = pygame.font.Font("Fonts/OpenSansRegular.ttf", 16)
 		self.game_objects = []
 
 		self.player = Player(self)
 		self.game_objects.append(self.player)
+		self.is_game_over = False
 
 		# TODO: Your program should test that pygame.mixerpygame module for loading and playing sounds is available and intialized before using it.
 		pygame.mixer.music.load("Sounds/zYnthetic - Abandon v3.ogg")
@@ -66,9 +68,18 @@ class Application:
 			if self.player.is_dead:
 				self.game_over()
 
+
 			self.surface.fill((0, 0, 0))
+
 			for go in self.game_objects:
 				go.render(self.surface, self.rect)
+
+			if self.is_game_over:
+				text_surface = self.font.render("You are dead!", True, (255,255,255))
+				text_rect = text_surface.get_rect()
+				text_rect.center = self.rect.center
+				self.surface.blit(text_surface, text_rect)
+
 			pygame.display.flip()
 
 	def on_quit(self):
@@ -94,6 +105,7 @@ class Application:
 			return
 
 		if isinstance(ogo, Player):
+			ogo.is_dead = True
 			self.game_over()
 			return
 
@@ -116,10 +128,9 @@ class Application:
 
 	def game_over(self):
 		# TODO: Proper death screen
-		self.death_sound.play()
-		print("You are dead!")
-		self.quit = True
-		return
+		if self.is_game_over == False:
+			self.death_sound.play()
+			self.is_game_over = True
 
 print("Asteroid alpha0")
 app = Application()
