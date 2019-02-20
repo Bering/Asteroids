@@ -1,6 +1,7 @@
 import pygame
 from game_object import GameObject
 from player import Player
+from bullet import Bullet
 from asteroid import Asteroid
 
 class Application:
@@ -43,7 +44,7 @@ class Application:
 					if ogo == go: continue
 					if not go.rect.colliderect(ogo.rect): continue
 					# TODO: circle collider
-					go.collision(ogo)
+					self.collision(go, ogo)
 
 			self.game_objects = [go for go in self.game_objects if not go.is_dead]
 
@@ -66,6 +67,33 @@ class Application:
 		or game_object.rect.center[1] < miny \
 		or game_object.rect.center[1] > maxy:
 			game_object.is_dead = True
+
+	def collision(self, go, ogo):
+		if not isinstance(go, Asteroid):
+			return
+
+		if isinstance(ogo, Asteroid):
+			return
+
+		if isinstance(ogo, Player):
+			# TODO: Proper death screen
+			print("You are dead!")
+			self.quit = True
+			return
+
+		go.is_dead = True
+		ogo.is_dead = True
+		
+		if go.size > 1:
+			a = Asteroid(go.size - 1)
+			a.x = go.rect.center[0]
+			a.y = go.rect.center[1]
+			self.game_objects.append(a)
+
+			a = Asteroid(go.size - 1)
+			a.x = go.rect.center[0]
+			a.y = go.rect.center[1]
+			self.game_objects.append(a)
 
 print("Asteroid alpha0")
 app = Application()

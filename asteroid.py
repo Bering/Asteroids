@@ -4,6 +4,7 @@ from game_object import GameObject
 
 class Asteroid(GameObject):
 	def __init__(self, size):
+		self.size = size
 		if size == 3:
 			image = "asteroid_big.png"
 		elif size == 2:
@@ -46,7 +47,3 @@ class Asteroid(GameObject):
 		while angle < 0:
 			angle += 360
 		return angle
-
-	def collision(self, other_game_object):
-		if isinstance(other_game_object, Asteroid):
-			return
