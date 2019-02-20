@@ -8,7 +8,7 @@ class Asteroid(GameObject):
 			image = "asteroid_big.png"
 		elif size == 2:
 			image = "asteroid_small.png"
-		else
+		else:
 			image = "asteroid_tiny.png"
 
 		vx = vy = 0
