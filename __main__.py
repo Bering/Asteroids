@@ -70,9 +70,11 @@ class Application:
 		for go in self.game_objects:
 			for ogo in self.game_objects:
 				if ogo == go: continue
-				if not go.rect.colliderect(ogo.rect): continue
-				# TODO: circle collider
-				self.collision(go, ogo)
+				# Circle collider
+				distance2 = (ogo.rect.center[0] - go.rect.center[0]) ** 2 \
+							+ (ogo.rect.center[1] - go.rect.center[1]) ** 2
+				if distance2 <= (go.rect.width/2 + ogo.rect.width/2) ** 2:
+					self.collision(go, ogo)
 
 		self.game_objects = [go for go in self.game_objects if not go.is_dead]
 		
