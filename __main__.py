@@ -152,7 +152,6 @@ class Application:
 			self.game_objects.append(a)
 
 	def game_over(self):
-		# TODO: Proper death screen
 		if self.is_game_over == False:
 			self.death_sound.play()
 			self.is_game_over = True
