@@ -12,21 +12,28 @@ class Asteroid(GameObject):
 		else:
 			image = "asteroid_tiny.png"
 
-		vx = vy = 0
-		while vx == vy == 0:
-			if random.randint(0, 1) == 0:
-				x = 0
-				vx = random.uniform(0.1, 1.0)
-			else:
-				x = 600
-				vx = random.uniform(-1.0, -0.1)
+		side = random.randrange(4)
+		if side == 0:
+			y = 0
+			x =random.randrange(600)
+			vx = random.uniform(-1.0, 1.0)
+			vy = random.uniform(0.1, 1.0)
+		elif side == 1:
+			x = 600
+			y = random.randrange(600)
+			vx = random.uniform(-1.0, -0.1)
+			vy = random.uniform(-1.0, 1.0)
 
-			if random.randint(0, 1) == 0:
-				y = 0
-				vy = random.uniform(0.1, 1.0)
-			else:
-				y = 600
-				vy = random.uniform(-1.0, -0.1)
+		elif side == 2:
+			x = random.randrange(600)
+			y = 600
+			vx = random.uniform(-1.0, 1.0)
+			vy = random.uniform(-1.0, -0.1)
+		else:
+			x = 0
+			y = random.randrange(600)
+			vx = random.uniform(0.1, 1.0)
+			vy = random.uniform(-1.0, 1.0)
 
 		super().__init__(image, x, y, vx, vy)
 		self.unrotated_surface = self.surface
