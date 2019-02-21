@@ -39,7 +39,7 @@ class Application:
 	def run(self):
 		self.quit = False
 		self.clock = pygame.time.Clock()
-		pygame.time.set_timer(pygame.USEREVENT, 2000)
+		pygame.time.set_timer(pygame.USEREVENT, 1000)
 
 		while(not self.quit):
 			self.clock.tick(60)
