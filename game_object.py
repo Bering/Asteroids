@@ -4,7 +4,7 @@ import pygame
 class GameObject:
 
 	def __init__(self, image, x, y, vx, vy):
-		image_file = os.path.join("images", image)
+		image_file = os.path.join("Images", image)
 		self.surface = pygame.image.load(image_file).convert_alpha()
 		self.rect = self.surface.get_rect().move(x, y)
 		self.x = x

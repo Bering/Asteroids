@@ -1,3 +1,4 @@
+import os
 import math
 import pygame
 from game_object import GameObject
@@ -10,7 +11,7 @@ class Player(GameObject):
 		self.rotation_speed = 0
 		self.angle = 0
 		self.app = app
-		self.fire_sound = pygame.mixer.Sound("Sounds\\fire.ogg")
+		self.fire_sound = pygame.mixer.Sound(os.path.join("Sounds", "fire.ogg"))
 
 	def events(self, event):
 		if event.type == pygame.KEYDOWN:

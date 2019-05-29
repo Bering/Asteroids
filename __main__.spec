@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['__main__.py'],
-             pathex=['D:\\Phil\\Documents\\Asteroid'],
+             pathex=['D:\\Phil\\Documents\\Asteroids'],
              binaries=[],
              datas=[('Fonts/*.ttf', 'Fonts'), ('Images/*.png', 'Images'), ('Sounds/*.ogg', 'Sounds')],
              hiddenimports=[],
