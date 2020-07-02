@@ -1,4 +1,4 @@
-#Yet Another Asteroid Clone
+# Yet Another Asteroid Clone
 
 Written in Python 3. Requires PyGame.
 
