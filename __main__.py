@@ -162,6 +162,6 @@ class Application:
 if getattr(sys, 'frozen', False):
 	os.chdir(os.path.dirname(sys.executable))
 
-print("Asteroid alpha0")
+print("Asteroid 1.0")
 app = Application()
 app.run()
