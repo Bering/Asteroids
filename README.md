@@ -1,5 +1,7 @@
 # Yet Another Asteroid Clone
 
+![Screenshot](Asteroids.png)
+
 Written in Python 3. Requires PyGame.
 
 Written in a very short time, as a challenge, kinda like Ludum Dare.
